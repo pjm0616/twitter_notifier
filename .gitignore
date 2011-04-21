@@ -1,6 +1,5 @@
 *.pyc
 *~
-/cache
 /config.txt
 /tweets.txt
 
