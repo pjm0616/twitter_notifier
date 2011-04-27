@@ -6,6 +6,7 @@ import hashlib
 import urllib2
 import json
 import os
+from BeautifulSoup import BeautifulStoneSoup
 
 from getpass import getpass
 from textwrap import TextWrapper
@@ -15,6 +16,9 @@ import tweepy
 
 g_config_filename = u'./config.txt'
 g_config = None
+
+def decodehtmlentities(data):
+	return unicode(BeautifulStoneSoup(data, convertEntities=BeautifulStoneSoup.HTML_ENTITIES))
 
 def notify_gnome(title, msg, icon=None):
 	pynotify.Notification(title, msg, icon).show()
@@ -57,8 +61,12 @@ class StreamWatcherListener(tweepy.StreamListener):
 		
 		print self.status_wrapper.fill(status.text)
 		print u'\n %s\n' % etcinfo
-
-		notify_gnome(status.text, etcinfo, profile_image)
+		
+		statustext = decodehtmlentities(status.text)
+		etcinfo = decodehtmlentities(etcinfo)
+		
+		notify_gnome(statustext, etcinfo, profile_image)
+		#notify_gnome(etcinfo, statustext, profile_image)
 
 	def on_error(self, status_code):
 		print u'An error has occured! Status code = %s' % status_code
