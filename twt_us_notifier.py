@@ -78,7 +78,7 @@ class StreamWatcherListener(tweepy.StreamListener):
 def loadcfg():
 	global g_config
 	g_config = json.load(open(g_config_filename))
-	g_config = dict(map(lambda x: (str(x[0]), str(x[1])), g_config.iteritems()))
+	#g_config = dict(map(lambda x: (str(x[0]), str(x[1])), g_config.iteritems()))
 def savecfg():
 	global g_config
 	json.dump(g_config, open(g_config_filename, u'w'))
