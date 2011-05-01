@@ -21,7 +21,11 @@ def decodehtmlentities(data):
 	return unicode(BeautifulStoneSoup(data, convertEntities=BeautifulStoneSoup.HTML_ENTITIES))
 
 def notify_gnome(title, msg, icon=None):
-	pynotify.Notification(title, msg, icon).show()
+	try:
+		pynotify.Notification(title, msg, icon).show()
+	except glib.GError:
+		# glib.GError: Reached stack-limit of 50
+		pass
 
 def download(url, filename):
 	data=urllib2.urlopen(url).read()
