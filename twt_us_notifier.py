@@ -57,20 +57,19 @@ class StreamWatcherListener(tweepy.StreamListener):
 
 	def on_status(self, status):
 		try:
-			etcinfo = u'\033[4m\033[1m\033[34m%s\033[0m\033[32m  %s  via %s\033[0m' % (status.author.screen_name, status.created_at, status.source)
+			etcinfo = u'%s  %s  via %s' % (status.author.screen_name, status.created_at, status.source)
+			etcinfo_term = u'\033[4m\033[1m\033[34m%s\033[0m\033[32m  %s  via %s\033[0m' % (status.author.screen_name, status.created_at, status.source)
 			profile_image = get_image(status.author.profile_image_url)
 		except AttributeError:
 			# sometimes status update lacks `author' key
 			return
 		
 		print '\033[1m' + self.status_wrapper.fill(status.text) + '\033[0m'
-		print u'%s\n========================================\n' % etcinfo
+		print u'%s\n========================================\n' % etcinfo_term
 		
 		statustext = decodehtmlentities(status.text)
-		etcinfo = decodehtmlentities(etcinfo)
 		
 		notify_gnome(statustext, etcinfo, profile_image)
-		#notify_gnome(etcinfo, statustext, profile_image)
 
 	def on_error(self, status_code):
 		print u'An error has occured! Status code = %s' % status_code
