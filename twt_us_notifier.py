@@ -10,6 +10,7 @@ from BeautifulSoup import BeautifulStoneSoup
 
 from getpass import getpass
 from textwrap import TextWrapper
+import glib
 import pynotify
 import tweepy
 
