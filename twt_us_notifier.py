@@ -81,7 +81,12 @@ class StreamWatcherListener(tweepy.StreamListener):
 
 def loadcfg():
 	global g_config
-	g_config = json.load(open(g_config_filename))
+	try:
+		g_config = json.load(open(g_config_filename))
+	except (IOError, ValueError):
+		key = raw_input(u'consumer_key: ')
+		secret = raw_input(u'consumer_secret: ')
+		g_config = {'consumer_key': key, 'consumer_secret': secret}
 def savecfg():
 	global g_config
 	json.dump(g_config, open(g_config_filename, u'w'))
