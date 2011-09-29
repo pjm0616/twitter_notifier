@@ -4,6 +4,7 @@
 import time
 import hashlib
 import urllib2
+import re
 import json
 import os
 from BeautifulSoup import BeautifulStoneSoup
@@ -34,6 +35,9 @@ def download(url, filename):
 	open(filename, u'w').write(data)
 
 def get_image(url):
+	if g_config.get('get_original_img', False):
+		url = re.sub('_normal(?=\.)', '', url)
+
 	hashed = hashlib.sha1(url).hexdigest()
 	filename = u'%s/cache/%s' % (os.getcwd(), hashed)
 	try:
