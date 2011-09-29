@@ -14,6 +14,7 @@ import glib
 import pynotify
 import tweepy
 
+pynotify.init('twitter_notifier')
 
 g_config_filename = u'./config.txt'
 g_config = None
