@@ -52,7 +52,6 @@ def get_image(url):
 tweetlogfile = open(u'./tweets.txt', u'a')
 
 class StreamWatcherListener(tweepy.StreamListener):
-
 	status_wrapper = TextWrapper(width=60, initial_indent=u'    ', subsequent_indent=u'    ')
 	
 	def on_data(self, data):
@@ -69,12 +68,12 @@ class StreamWatcherListener(tweepy.StreamListener):
 		except AttributeError:
 			# sometimes status update lacks `author' key
 			return
-		
+
 		print '\033[1m' + self.status_wrapper.fill(status.text) + '\033[0m'
 		print u'%s\n========================================\n' % etcinfo_term
-		
+
 		statustext = decodehtmlentities(status.text)
-		
+
 		notify_gnome(statustext, etcinfo, profile_image)
 
 	def on_error(self, status_code):
@@ -99,7 +98,7 @@ def savecfg():
 def main():
 	global g_config
 	loadcfg()
-	
+
 	auth = tweepy.OAuthHandler(g_config[u'consumer_key'], g_config[u'consumer_secret'])
 	if u'access_token_key' not in g_config:
 		try:
@@ -113,17 +112,17 @@ def main():
 			auth.get_access_token(pincode)
 			print(u'Key: %s' % auth.access_token.key)
 			print(u'Secret: %s' % auth.access_token.secret)
-			
+
 			g_config[u'access_token_key'] = auth.access_token.key
 			g_config[u'access_token_secret'] = auth.access_token.secret
 			savecfg()
 
 			print(u'OK. Now restart the program.')
-		
+
 		return
 	else:
 		auth.set_access_token(g_config[u'access_token_key'], g_config[u'access_token_secret'])
-	
+
 	stream = tweepy.Stream(auth, StreamWatcherListener(), timeout=None, secure=True)
 	stream.userstream()
 
