@@ -11,13 +11,19 @@ import sys
 import getopt
 from BeautifulSoup import BeautifulStoneSoup
 
+import tweepy
 from getpass import getpass
 from textwrap import TextWrapper
-import glib
-import pynotify
-import tweepy
-
-pynotify.init('twitter_notifier')
+try:
+	import glib
+	import pynotify
+	pynotify.init('twitter_notifier')
+except:
+	# non-linux compat
+	# FIXME
+	class glib:
+		class GError:
+			pass
 
 g_twitter = None
 
@@ -30,6 +36,8 @@ def notify_gnome(title, msg, icon=None):
 		pynotify.Notification(title, msg, icon).show()
 	except glib.GError:
 		# glib.GError: Reached stack-limit of 50
+		pass
+	except:
 		pass
 
 def download(url, filename):
