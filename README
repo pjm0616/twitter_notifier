@@ -1,0 +1,10 @@
+
+twitter_notifier: a simple realtime desktop tweet notifier.
+you need to get your own consumer_key and consumer_secret from https://dev.twitter.com/
+
+Depends:
+	tweepy (>= 1.7.1; old version does not support userstream)
+	BeautifulSoup
+	glib
+	pynotify
+
