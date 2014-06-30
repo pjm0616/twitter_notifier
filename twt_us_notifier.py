@@ -56,13 +56,13 @@ def get_image(url):
 		print u'* Downloading %s as %s' % (url, filename)
 		download(url, filename)
 		open(u'./cache/list.txt', u'a').write(u'%s\t%s\n' % (hashed, url))
-	
+
 	return filename
 
 
 class StreamWatcherListener(tweepy.StreamListener):
 	status_wrapper = TextWrapper(width=60, initial_indent=u'    ', subsequent_indent=u'    ')
-	
+
 	def on_data(self, data):
 		super(StreamWatcherListener, self).on_data(data)
 		g_twitter.streamlogfile.write(data)
