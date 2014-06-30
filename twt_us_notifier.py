@@ -78,8 +78,12 @@ class StreamWatcherListener(tweepy.StreamListener):
 			# sometimes status update lacks `author' key
 			return
 
+		real_text = status.text
+		if getattr(status, 'retweeted_status', None):
+			real_text = 'RT @%s: %s' % (status.retweeted_status.user.screen_name, status.retweeted_status.text)
+
 		print u'tweet %s' % status.id
-		print u'\033[1m' + self.status_wrapper.fill(status.text) + '\033[0m'
+		print u'\033[1m' + self.status_wrapper.fill(real_text) + '\033[0m'
 		print u'%s\n========================================\n' % etcinfo_term
 
 		statustext = decodehtmlentities(status.text)
